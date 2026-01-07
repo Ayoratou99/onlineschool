@@ -52,7 +52,7 @@ return [
                  */
                 'annotations' => [
                     base_path('app'),
-                    base_path('Modules/Users/app'),
+                    base_path('Modules'),
                 ],
             ],
         ],

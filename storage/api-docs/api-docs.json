@@ -1,0 +1,379 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "AninfPush API Documentation",
+        "description": "API microservice for managing multi-channel messaging (Email, SMS, WhatsApp) with Keycloak authentication",
+        "contact": {
+            "email": "support@aninfpush.com"
+        },
+        "license": {
+            "name": "Proprietary",
+            "url": "https://aninfpush.com/license"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local Development Server"
+        },
+        {
+            "url": "https://api.yourdomain.com",
+            "description": "Production Server"
+        }
+    ],
+    "paths": {
+        "/api/user/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login",
+                "description": "Login a user with email and password",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_uuid": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials or authentication failed."
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "authentication_failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unable to connect to Keycloak server."
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "service_unavailable"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Privilege": {
+                "title": "Privilege",
+                "description": "Privilege model representing a permission/action",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "is_active"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Privilege unique identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "Privilege display name",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Unique slug identifier",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Privilege description",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "resource": {
+                        "description": "Resource/Module this privilege belongs to",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "action": {
+                        "description": "Action: create, read, update, delete, etc.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "is_active": {
+                        "description": "Whether the privilege is active",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "title": "Role",
+                "description": "Role model representing a user role",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "is_active"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Role unique identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "Role display name",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Unique slug identifier",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Role description",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "is_system": {
+                        "description": "Whether this is a system role (cannot be deleted)",
+                        "type": "boolean"
+                    },
+                    "is_active": {
+                        "description": "Whether the role is active",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "RolePrivilege": {
+                "title": "RolePrivilege",
+                "description": "Pivot model for role-privilege relationship",
+                "required": [
+                    "id",
+                    "role_id",
+                    "privilege_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "RolePrivilege unique identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "role_id": {
+                        "description": "Role identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "privilege_id": {
+                        "description": "Privilege identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "required": [
+                    "id",
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "phone",
+                    "address",
+                    "city",
+                    "state",
+                    "zip",
+                    "country",
+                    "user_type",
+                    "is_active"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "User unique identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "email": {
+                        "description": "User email address",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "first_name": {
+                        "description": "User first name",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "User last name",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "User phone number",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "User street address",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "User city",
+                        "type": "string"
+                    },
+                    "state": {
+                        "description": "User state/province",
+                        "type": "string"
+                    },
+                    "zip": {
+                        "description": "User postal/zip code",
+                        "type": "string"
+                    },
+                    "country": {
+                        "description": "User country",
+                        "type": "string"
+                    },
+                    "user_type": {
+                        "description": "User role type",
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "academic_staff",
+                            "student"
+                        ]
+                    },
+                    "is_active": {
+                        "description": "Whether the user account is active",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UserRole": {
+                "title": "UserRole",
+                "description": "Pivot model for user-role relationship",
+                "required": [
+                    "id",
+                    "user_id",
+                    "role_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "UserRole unique identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "description": "User identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "role_id": {
+                        "description": "Role identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter Keycloak JWT token",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}

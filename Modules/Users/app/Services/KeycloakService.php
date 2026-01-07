@@ -12,7 +12,7 @@ use Modules\Users\Exceptions\KeycloakConnectionException;
 use Modules\Users\Interfaces\AuthInterface;
 use Modules\Users\Models\User;
 
-class KeycloakAuthService implements AuthInterface
+class KeycloakService implements AuthInterface
 {
     protected $baseUrl;
 

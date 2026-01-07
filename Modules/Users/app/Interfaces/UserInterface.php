@@ -2,6 +2,7 @@
 
 namespace Modules\Users\Interfaces;
 
+use Illuminate\Support\Collection;
 use Modules\Users\Models\User;
 
 interface UserInterface 

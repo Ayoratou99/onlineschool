@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            
+
             // Keycloak Unique Identifier (Subject)
             // This is the primary link between Laravel and Keycloak
             $table->string('keycloak_id')->unique()->nullable()->index();
-            
+
             // Basic Info (Mirrored from Keycloak for performance)
             $table->string('username')->unique();
             $table->string('email')->unique();
@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('zip')->nullable();
             $table->string('country')->nullable();
             // School Logic Columns
-            $table->enum('user_type', ['admin','academic_staff', 'student'])
-                  ->default('student');
+            $table->enum('user_type', ['admin', 'academic_staff', 'student'])
+                ->default('student');
             $table->boolean('is_active')->default(true);
             // Housekeeping
             $table->softDeletes(); // Adds 'deleted_at' column
