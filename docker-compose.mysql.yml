@@ -1,0 +1,54 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: onlineschoolmultitenant-mysql
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=onlineschoolmultitenant
+      - MYSQL_USER=onlineschoolmultitenant
+      - MYSQL_PASSWORD=onlineschoolmultitenant_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - onlineschoolmultitenant_mysql_data:/var/lib/mysql
+    networks:
+      - onlineschoolmultitenant-mysql-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: onlineschoolmultitenant-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root_password
+      - UPLOAD_LIMIT=300M
+    depends_on:
+      - mysql
+    networks:
+      - onlineschoolmultitenant-mysql-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: onlineschoolmultitenant-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - onlineschoolmultitenant_redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - onlineschoolmultitenant-mysql-network
+
+volumes:
+  onlineschoolmultitenant_mysql_data:
+  onlineschoolmultitenant_redis_data:
+
+networks:
+  onlineschoolmultitenant-mysql-network:
+    driver: bridge
+

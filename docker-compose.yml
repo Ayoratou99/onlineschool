@@ -1,0 +1,26 @@
+#just implement mysql and phpmyadmin
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: onlineschoolmultitenant
+      MYSQL_USER: onlineschoolmultitenant
+      MYSQL_PASSWORD: onlineschoolmultitenant
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+      PMA_DATABASE: mydatabase
+      PMA_ALLOW_NO_PASSWORD: "1"
+      PMA_ABSOLUTE_URI: "http://localhost:8081/"
+      PMA_ARBITRARY: "1"
+      PMA_ALLOW_MULTI_DB: "1"
+      PMA_ALLOW_NO_DB_SELECT: "1"
