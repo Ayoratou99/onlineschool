@@ -1,0 +1,20 @@
+{
+    "name": "nwidart/academique",
+    "description": "Module Academique - cycles, filieres, niveaux, semestres, UE, emplois du temps",
+    "authors": [{"name": "Nicolas Widart", "email": "n.widart@gmail.com"}],
+    "extra": {
+        "laravel": {"providers": [], "aliases": {}}
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Academique\\": "app/",
+            "Modules\\Academique\\Services\\": "app/Services/",
+            "Modules\\Academique\\Documentation\\Swagger\\": "Documentation/Swagger/",
+            "Modules\\Academique\\App\\Validators\\": "app/Validators/",
+            "Modules\\Academique\\App\\Tests\\": "tests/",
+            "Modules\\Academique\\Validators\\": "app/Validators/",
+            "Modules\\Academique\\Database\\Factories\\": "database/factories/",
+            "Modules\\Academique\\Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "name": "nwidart/parametrage",
+    "description": "Module Parametrage - annees academiques, baremes, regles de validation",
+    "authors": [{"name": "Nicolas Widart", "email": "n.widart@gmail.com"}],
+    "extra": {
+        "laravel": {"providers": [], "aliases": {}}
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Parametrage\\": "app/",
+            "Modules\\Parametrage\\Services\\": "app/Services/",
+            "Modules\\Parametrage\\Documentation\\Swagger\\": "Documentation/Swagger/",
+            "Modules\\Parametrage\\App\\Validators\\": "app/Validators/",
+            "Modules\\Parametrage\\App\\Tests\\": "tests/",
+            "Modules\\Parametrage\\Validators\\": "app/Validators/",
+            "Modules\\Parametrage\\Database\\Factories\\": "database/factories/",
+            "Modules\\Parametrage\\Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

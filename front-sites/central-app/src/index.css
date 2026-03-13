@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-600: rgb(13 148 136);
+}
+
+body {
+  @apply bg-surface-50 text-stone-800 antialiased;
+}

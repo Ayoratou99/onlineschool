@@ -1,0 +1,13 @@
+{
+    "name": "nwidart/tenant",
+    "description": "Tenant module",
+    "authors": [{"name": "Nicolas Widart", "email": "n.widart@gmail.com"}],
+    "extra": {"laravel": {"providers": [], "aliases": {}}},
+    "autoload": {
+        "psr-4": {
+            "Modules\\Tenant\\": "app/",
+            "Modules\\Tenant\\Documentation\\Swagger\\": "Documentation/Swagger/"
+        }
+    },
+    "autoload-dev": {"psr-4": {"Modules\\Tenant\\Tests\\": "tests/"}}
+}

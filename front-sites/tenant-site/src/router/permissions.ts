@@ -1,0 +1,44 @@
+import type { UserRole } from '@/types/auth.types';
+
+export type Permission =
+  | 'PARAMETRAGE_IDENTITE'
+  | 'PARAMETRAGE_HERO'
+  | 'PARAMETRAGE_MENU'
+  | 'PARAMETRAGE_STATS'
+  | 'PARAMETRAGE_GALERIE'
+  | 'PARAMETRAGE_SECTIONS'
+  | 'PARAMETRAGE_CONTACT'
+  | 'ACTUALITES_VIEW'
+  | 'ACTUALITES_CREATE'
+  | 'ACTUALITES_EDIT'
+  | 'ACTUALITES_DELETE'
+  | 'ACTUALITES_EPINGLER';
+
+export const ROLE_PERMISSIONS: Record<UserRole, Permission[] | ['*']> = {
+  ADMIN: ['*'],
+  DIRECTION: [
+    'PARAMETRAGE_IDENTITE',
+    'PARAMETRAGE_HERO',
+    'PARAMETRAGE_MENU',
+    'PARAMETRAGE_STATS',
+    'PARAMETRAGE_GALERIE',
+    'PARAMETRAGE_SECTIONS',
+    'PARAMETRAGE_CONTACT',
+    'ACTUALITES_VIEW',
+    'ACTUALITES_CREATE',
+    'ACTUALITES_EDIT',
+    'ACTUALITES_DELETE',
+    'ACTUALITES_EPINGLER',
+  ],
+  CHEF_DEPARTEMENT: ['ACTUALITES_VIEW', 'ACTUALITES_CREATE', 'ACTUALITES_EDIT'],
+  SCOLARITE: ['ACTUALITES_VIEW', 'ACTUALITES_CREATE', 'ACTUALITES_EDIT', 'ACTUALITES_EPINGLER'],
+  ENSEIGNANT: ['ACTUALITES_VIEW'],
+  COMPTABLE: ['ACTUALITES_VIEW'],
+  BIBLIOTHEQUE: ['ACTUALITES_VIEW'],
+  ETUDIANT: [],
+};
+
+export function hasPermission(role: UserRole, permission: Permission): boolean {
+  const perms = ROLE_PERMISSIONS[role];
+  return perms.includes('*') || perms.includes(permission);
+}

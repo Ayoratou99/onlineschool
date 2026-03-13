@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/statistique",
+    "description": "Module de statistiques dynamiques",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Statistique\\": "app/",
+            "Modules\\Statistique\\Services\\": "app/Services/",
+            "Modules\\Statistique\\Documentation\\Swagger\\": "Documentation/Swagger/",
+            "Modules\\Statistique\\Database\\Factories\\": "database/factories/",
+            "Modules\\Statistique\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Statistique\\Tests\\": "tests/"
+        }
+    }
+}

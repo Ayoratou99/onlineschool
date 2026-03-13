@@ -1,0 +1,11 @@
+{
+    "name": "Academique",
+    "alias": "academique",
+    "description": "Module académique (cycles, filières, niveaux, semestres, UE, emplois du temps)",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Academique\\Providers\\AcademiqueServiceProvider"
+    ],
+    "files": []
+}

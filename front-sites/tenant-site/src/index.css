@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tp: #0B3D6E;
+  --ts: #C8A84B;
+  --ink: #18182E;
+  --off: #F7F6F3;
+  --bdr: #E2E0DA;
+  --mute: #8C8CA8;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,10 @@
+# Add these lines to your hosts file so tenant subdomains resolve to localhost.
+# Windows: C:\Windows\System32\drivers\etc\hosts (edit as Administrator)
+# macOS/Linux: /etc/hosts (sudo)
+#
+# Then create a tenant with domain "foo.localhost" (or bar.localhost) and open
+# http://foo.localhost:8000 (or whatever port you use for the Laravel app).
+
+127.0.0.1 foo.localhost
+127.0.0.1 bar.localhost
+127.0.0.1 demo.localhost

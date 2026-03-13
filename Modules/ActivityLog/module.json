@@ -1,0 +1,11 @@
+{
+    "name": "ActivityLog",
+    "alias": "activitylog",
+    "description": "Activity logging and audit trail",
+    "keywords": ["activity", "log", "audit"],
+    "priority": 0,
+    "providers": [
+        "Modules\\ActivityLog\\Providers\\ActivityLogServiceProvider"
+    ],
+    "files": []
+}

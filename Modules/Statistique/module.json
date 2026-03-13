@@ -1,0 +1,11 @@
+{
+    "name": "Statistique",
+    "alias": "statistique",
+    "description": "Module de statistiques dynamiques avec agrégations, filtres, périodes et regroupements.",
+    "keywords": ["statistics", "analytics", "aggregation"],
+    "priority": 0,
+    "providers": [
+        "Modules\\Statistique\\Providers\\StatistiqueServiceProvider"
+    ],
+    "files": []
+}

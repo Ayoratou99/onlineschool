@@ -14,6 +14,15 @@ return [
     |
     */
 
+    'paperless' => [
+        'url'   => env('PAPERLESS_URL', 'http://paperless:8000/api/'),
+        'token' => env('PAPERLESS_TOKEN'),
+        'allowed_mimetypes' => array_filter(array_map('trim', explode(',', env(
+            'PAPERLESS_ALLOWED_MIMETYPES',
+            'application/pdf,image/png,image/jpeg,image/tiff,image/gif,image/webp,text/plain'
+        )))),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],

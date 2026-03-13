@@ -1,0 +1,112 @@
+name: onlineschoolmultitenant-dev
+
+services:
+  # --- BASE DE DONNÉES ---
+  pgsql:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: onlineschoolmultitenant
+      POSTGRES_USER: onlineschoolmultitenant
+      POSTGRES_PASSWORD: onlineschoolmultitenant_password
+    volumes:
+      - onlineschoolmultitenant_pgsql_data:/var/lib/postgresql/data
+      # init/*.sql run on first start only: 01 paperless DB, 02 test DB (onlineschoolmultitenant_test)
+      - ./docker/pgsql/init:/docker-entrypoint-initdb.d
+
+  # --- CACHE & QUEUES ---
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - onlineschoolmultitenant_redis_data:/data
+    command: redis-server --appendonly yes
+
+  # --- INTERFACE DB ---
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - onlineschoolmultitenant_pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - pgsql
+
+  # --- GESTION DOCUMENTAIRE ---
+  paperless:
+    image: paperlessngx/paperless-ngx:latest
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    environment:
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_DBHOST: pgsql
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: onlineschoolmultitenant
+      PAPERLESS_DBPASS: onlineschoolmultitenant_password
+      PAPERLESS_SECRET_KEY: change-me-in-production
+      PAPERLESS_URL: http://localhost:8001
+      PAPERLESS_OCR_LANGUAGES: fra+eng
+    volumes:
+      - onlineschoolmultitenant_paperless_data:/usr/src/paperless/data
+      - onlineschoolmultitenant_paperless_media:/usr/src/paperless/media
+    depends_on:
+      - redis
+      - pgsql
+
+  # --- STOCKAGE S3 ---
+  minio:
+    image: minio/minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password123
+    volumes:
+      - onlineschoolmultitenant_minio_data:/data
+    command: server /data --console-address ":9001"
+
+  # --- MONITORING (Déverrouillé) ---
+  netdata:
+    image: netdata/netdata
+    restart: unless-stopped
+    ports:
+      - "19999:19999"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./storage/logs:/var/log/laravel:ro
+      - ./docker/netdata/config:/etc/netdata # Charge vos netdata.conf et acls.conf
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor=unconfined
+
+  # --- VISIONNEUSE DE LOGS (Bonus débugging) ---
+  dozzle:
+    image: amir20/dozzle:latest
+    ports:
+      - "8888:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      DOZZLE_FILTER: "name=onlineschoolmultitenant*"
+
+volumes:
+  onlineschoolmultitenant_pgsql_data:
+  onlineschoolmultitenant_pgadmin_data:
+  onlineschoolmultitenant_redis_data:
+  onlineschoolmultitenant_paperless_data:
+  onlineschoolmultitenant_paperless_media:
+  onlineschoolmultitenant_minio_data:

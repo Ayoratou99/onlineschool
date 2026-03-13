@@ -1,0 +1,11 @@
+{
+    "name": "Parametrage",
+    "alias": "parametrage",
+    "description": "Module de paramétrage (années académiques, barèmes, règles de validation)",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Parametrage\\Providers\\ParametrageServiceProvider"
+    ],
+    "files": []
+}

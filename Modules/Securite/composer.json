@@ -1,0 +1,35 @@
+{
+    "name": "nwidart/securite",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Securite\\": "app/",
+            "Modules\\Securite\\Services\\": "app/Services/",
+            "Modules\\Securite\\Documentation\\Swagger\\": "Documentation/Swagger/",
+            "Modules\\Securite\\App\\Validators\\": "app/Validators/",
+            "Modules\\Securite\\App\\Tests\\": "tests/",
+            "Modules\\Securite\\Validators\\": "app/Validators/",
+            "Modules\\Securite\\Database\\Factories\\": "database/factories/",
+            "Modules\\Securite\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Securite\\Tests\\": "tests/"
+        }
+    }
+}

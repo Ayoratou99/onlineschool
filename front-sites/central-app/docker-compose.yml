@@ -1,0 +1,14 @@
+
+name: central-app
+
+services:
+  central-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Point to main stack API (when using host network or same host)
+        VITE_API_URL: ${VITE_API_URL:-}
+    restart: unless-stopped
+    ports:
+      - "3000:80"
